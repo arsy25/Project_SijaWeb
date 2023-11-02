@@ -86,8 +86,7 @@
           Komputer.
         </p>
         <div class="demovid q-gutter-xl">
-          <q-btn class="btdemo" flat>Demo Video</q-btn>
-          <q-btn class="btdemo" flat>Explore</q-btn>
+          <q-btn icon="play_arrow" class="btdemo" flat>watch demo</q-btn>
         </div>
       </q-card>
       <div class="overlay-content q-mr-xl">
@@ -232,7 +231,7 @@ window.addEventListener("scroll", function () {
   border-color: #000000;
   border-radius: 30px;
   font-family: Poppins;
-  width: 30%;
+  width: 40%;
 }
 
 .btdemo:hover {
