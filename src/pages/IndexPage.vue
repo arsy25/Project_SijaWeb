@@ -19,8 +19,10 @@
           flat
           style="width: 100px"
           class="btn"
+          id="buttonmenu"
           label="Home"
-          href="#"
+          @click="scrollToSection('section1')"
+          :class="{ active: activeSection === 'section1' }"
         ></q-btn>
       </div>
 
@@ -31,7 +33,8 @@
           style="width: 100px"
           class="btn"
           label="Learn"
-          href="#"
+          @click="scrollToSection('section2')"
+          :class="{ active: activeSection === 'section2' }"
         ></q-btn>
       </div>
 
@@ -42,7 +45,8 @@
           style="width: 129px"
           class="btn"
           label="Documentation"
-          href="#"
+          @click="scrollToSection('section3')"
+          :class="{ active: activeSection === 'section3' }"
         ></q-btn>
       </div>
 
@@ -53,25 +57,15 @@
           style="width: 100px"
           class="btn"
           label="About"
-          href="#"
+          @click="scrollToSection('section4')"
+          :class="{ active: activeSection === 'section4' }"
         ></q-btn>
       </div>
-
-      <!-- <div class="col-1 q-mr-xl q-ml-md">
-        <q-btn
-          rounded
-          flat
-          style="width: 100px"
-          class="btn"
-          label="Contact"
-          href="#"
-        ></q-btn>
-      </div> -->
 
       <div class="col-2"></div>
     </q-header>
 
-    <section class="flex-section1">
+    <section class="flex-section1" id="section1">
       <q-card
         class="q-pa-md q-ml-xl borderhome"
         style="width: 90%; height: 62%"
@@ -100,9 +94,9 @@
       </q-btn>
     </div>
 
-    <section class="flex-section">Learn</section>
-    <section class="flex-section">Documentation</section>
-    <section class="flex-section">About</section>
+    <section class="flex-section" id="section2">Learn</section>
+    <section class="flex-section" id="section3">Documentation</section>
+    <section class="flex-section" id="section4">About</section>
   </q-layout>
 </template>
 
@@ -116,20 +110,75 @@ export default {
   },
   data() {
     return {
+      activeSection: null,
       defaultOptions: { animationData: animationData.default },
       animationSpeed: 2,
     };
   },
-};
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
 
-window.addEventListener("scroll", function () {
-  const navbar = document.getElementById("navbar");
-  if (window.scrollY >= 50) {
-    navbar.classList.add("navbar-scrolled");
-  } else {
-    navbar.classList.remove("navbar-scrolled");
-  }
-});
+  methods: {
+    scrollToSection(targetId) {
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth" });
+        this.updateActiveButton(targetId);
+      }
+    },
+    updateActiveButton(targetId) {
+      if (this.activeSection) {
+        // Hapus kelas 'active-button' dari tombol yang sebelumnya aktif
+        const previousActiveButton = document.getElementById(
+          this.activeSection
+        );
+        previousActiveButton.classList.remove("active");
+      }
+
+      // Tambahkan kelas 'active-button' ke tombol yang baru aktif
+      const newActiveButton = document.getElementById(targetId);
+      newActiveButton.classList.add("active");
+
+      this.activeSection = targetId;
+    },
+    handleScroll() {
+      const scrollY = window.scrollY;
+      const sectionOffsets = {
+        section1: document.getElementById("section1").offsetTop,
+        section2: document.getElementById("section2").offsetTop,
+        section3: document.getElementById("section3").offsetTop,
+        section4: document.getElementById("section4").offsetTop,
+      };
+
+      // Temukan section yang sedang terlihat
+      let activeSection = null;
+
+      for (const section in sectionOffsets) {
+        if (
+          scrollY >= sectionOffsets[section] &&
+          scrollY < sectionOffsets[section] + 200
+        ) {
+          activeSection = section;
+          break;
+        }
+      }
+
+      this.activeSection = activeSection;
+    },
+
+    mounted() {
+      window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY >= 50) {
+          navbar.classList.add("navbar-scrolled");
+        } else {
+          navbar.classList.remove("navbar-scrolled");
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style>
@@ -197,7 +246,6 @@ window.addEventListener("scroll", function () {
   align-items: center;
   justify-content: left;
   height: 95vh;
-  /* background-color: #f1f1f2; Ganti dengan warna latar belakang yang Anda inginkan */
   margin-left: -10%;
 }
 
@@ -261,5 +309,11 @@ window.addEventListener("scroll", function () {
   scrollbar-width: thin;
   scrollbar-color: rgb(112, 129, 245) #f1f1f2;
   scroll-behavior: smooth;
+}
+
+/* Add styling for active links */
+.navbar .btn.active {
+  background-color: #7081f5;
+  color: #000000;
 }
 </style>
