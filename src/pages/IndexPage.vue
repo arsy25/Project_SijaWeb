@@ -9,7 +9,7 @@
   />
 
   <q-layout view="hHh lpR fFf" class="bgall">
-    <q-header class="row navbar flex flex-center" id="navbar">
+    <q-header class="row navbar flex flex-center q-mt-sm" id="navbar">
       <div class="col-1"></div>
       <div class="col-4 text-weight-bold text-h5">LOGO</div>
 
@@ -68,7 +68,7 @@
     <section class="flex-section1" id="section1">
       <q-card
         class="q-pa-md q-ml-xl borderhome"
-        style="width: 90%; height: 62%"
+        style="width: 60%; height: 62%"
         flat
       >
         <div class="title">Sistem Informasi Jaringan dan Aplikasi</div>
@@ -84,17 +84,21 @@
         </div>
       </q-card>
       <div class="overlay-content q-mr-xl">
-        <lottie style="width: 590px" :options="defaultOptions" />
+        <lottie style="width: 750px" :options="defaultOptions" />
       </div>
     </section>
     <div class="tombolkebawah">
-      <q-btn class="btreadmore" flat rounded
+      <q-btn class="btreadmore" flat rounded @click="scrollToNextSection"
         >read more
-        <div class="tombolkebawah"><i class="bi bi-arrow-down-short"></i></div>
+        <div class="tombolkebawah">
+          <q-icon name="keyboard_arrow_down" style="color: #7081f5" />
+        </div>
       </q-btn>
     </div>
 
-    <section class="flex-section" id="section2">Learn</section>
+    <section class="flex-section2" id="section2">
+      <div class="title2">Apa saja yang kita pelajari?</div>
+    </section>
     <section class="flex-section" id="section3">Documentation</section>
     <section class="flex-section" id="section4">About</section>
   </q-layout>
@@ -177,6 +181,13 @@ export default {
         }
       });
     },
+
+    scrollToNextSection() {
+      const nextSection = document.getElementById("section2"); // Ganti dengan ID dari section selanjutnya
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: "smooth" });
+      }
+    },
   },
 };
 </script>
@@ -241,6 +252,13 @@ export default {
   text-align: center;
   margin: 0;
 }
+.flex-section2 {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
 .flex-section1 {
   display: flex;
   align-items: center;
@@ -257,14 +275,24 @@ export default {
 }
 .title {
   font-family: Poppins;
-  font-size: 35px;
+  font-size: 4rem;
   padding: 2%;
   font-weight: 900;
 }
+.title2 {
+  font-family: Poppins;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  margin-top: -40%;
+}
+
 .capt {
   font-family: Poppins;
   padding: 2%;
-  margin-top: -2%;
+  font-size: 120%;
+  margin-top: -4%;
+  margin-bottom: -1px;
 }
 .demovid {
   padding: 2%;
@@ -290,7 +318,7 @@ export default {
 .overlay-content {
   position: relative;
   z-index: 2; /* Atur z-index overlay lebih tinggi daripada q-card */
-  margin-left: -10%; /* Sesuaikan nilai negatif untuk menimpa bagian kiri */
+  margin-left: -9%; /* Sesuaikan nilai negatif untuk menimpa bagian kiri */
   margin-top: 10%;
   margin-bottom: 10%;
 }
